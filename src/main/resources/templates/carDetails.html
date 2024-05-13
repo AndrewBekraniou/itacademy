@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesCarDetails.css}">
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .car-details {
+            flex-basis: 30%;
+        }
+        .order-form {
+            flex-basis: 30%;
+        }
+        .passport-data {
+            flex-basis: 30%;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Car Details</h1>
+    <div class="auth-buttons">
+        <button class="register-btn" onclick="location.href='/mainPage'">Register</button>
+        <button class="login-btn" onclick="location.href='/mainPage'">Login</button>
+    </div>
+</header>
+
+<div class="container">
+    <div class="car-details">
+        <h2>Car Details</h2>
+        <p><strong>ID:</strong> <span th:text="${carData.id}"></span></p>
+        <p><strong>Manufacturer:</strong> <span th:text="${carData.manufacturer}"></span></p>
+        <p><strong>Model:</strong> <span th:text="${carData.model}"></span></p>
+        <p><strong>Color:</strong> <span th:text="${carData.color}"></span></p>
+        <p><strong>Year of Issue:</strong> <span th:text="${carData.yearOfIssue}"></span></p>
+        <p><strong>Body Type:</strong> <span th:text="${carData.bodyType}"></span></p>
+        <p><strong>Fuel Type:</strong> <span th:text="${carData.fuelType}"></span></p>
+        <p><strong>Transmission:</strong> <span th:text="${carData.transmission}"></span></p>
+        <p><strong>Rent Price Per Day:</strong> <span th:text="${carData.rentPricePerDay}"></span></p>
+    </div>
+
+    <div class="order-form">
+        <h2>Place Order</h2>
+        <form th:action="@{/orders/create}" method="post">
+            <input type="hidden" id="carId" name="carId" th:value="${carData.id}">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required><br>
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" required><br>
+            <label for="rentDays">Rent Days:</label>
+            <input type="number" id="rentDays" name="rentDays" min="1" required><br>
+            <label for="rentPricePerDay" th:if="${carData != null}">Rent Price Per Day:</label>
+            <input type="text" id="rentPricePerDay" name="rentPricePerDay"
+                   th:value="${carData != null ? carData.rentPricePerDay : ''}" readonly><br>
+            <label for="totalPrice">Total Price:</label>
+            <input type="text" id="totalPrice" name="totalPrice" readonly><br><br>
+            <button type="submit" id="submit-order" class="inactive-button">Submit Order</button>
+        </form>
+    </div>
+    <div class="passport-data">
+        <h2>Passport Data</h2>
+        <form th:action="@{/carDetails/confirm}" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" required><br>
+            <label for="passportNumber">Passport Number:</label>
+            <input type="text" id="passportNumber" name="passportNumber" required><br>
+            <label for="identificationNumber">Identification Number:</label>
+            <input type="text" id="identificationNumber" name="identificationNumber" required><br>
+            <label for="birthDate">Birth Date:</label>
+            <input type="date" id="birthDate" name="birthDate" required><br>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="M">M</option>
+                <option value="F">F</option>
+            </select><br>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br><br>
+            <button type="button" id="confirmButton">Confirm</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('startDate').addEventListener('change', updateRentDaysAndTotalPrice);
+    document.getElementById('endDate').addEventListener('change', updateRentDaysAndTotalPrice);
+    function updateRentDaysAndTotalPrice() {
+        var startDate = new Date(document.getElementById('startDate').value);
+        var endDate = new Date(document.getElementById('endDate').value);
+        if (startDate >= endDate) {
+            alert("Start date must be before end date.");
+            document.getElementById('startDate').value = '';
+            return;
+        }
+        var diffTime = Math.abs(endDate - startDate);
+        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById('rentDays').value = diffDays;
+
+        var rentPricePerDay = parseFloat(document.getElementById('rentPricePerDay').value);
+        var totalPrice = diffDays * rentPricePerDay;
+        document.getElementById('totalPrice').value = totalPrice.toFixed(2);
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var nameField = document.getElementById('name');
+        var surnameField = document.getElementById('surname');
+        var passportNumberField = document.getElementById('passportNumber');
+        var identificationNumberField = document.getElementById('identificationNumber');
+        var birthDateField = document.getElementById('birthDate');
+        var genderField = document.getElementById('gender');
+        var addressField = document.getElementById('address');
+        var submitButton = document.getElementById('submit-order');
+        var confirmButton = document.getElementById('confirmButton');
+
+        confirmButton.addEventListener('click', function () {
+            confirmButton.classList.add('confirmed');
+            var formData = {
+                name: nameField.value,
+                surname: surnameField.value,
+                passportNumber: passportNumberField.value,
+                identificationNumber: identificationNumberField.value,
+                birthDate: birthDateField.value,
+                gender: genderField.value,
+                address: addressField.value
+            };
+
+            if (!validateForm()) {
+                alert("Пожалуйста, заполните все поля.");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/carDetails/confirm", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = xhr.responseText;
+                        if (response === "Data updated successfully" || response === "success") {
+                            confirmButton.classList.add('data-saved');
+                            checkAndToggleSubmitButton();
+                            alert("Данные успешно сохранены!");
+                        } else if (response === "Data already exists for other users") {
+                            alert("Данные уже существуют у других пользователей.");
+                        } else if (response === "Please log in") {
+                            alert("Пожалуйста, авторизуйтесь.");
+                        } else if (response === "Passport data not found for the user") {
+                            alert("Данные паспорта для этого пользователя не найдены.");
+                        }
+                    } else {
+                        alert("Произошла ошибка при сохранении данных.");
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(formData));
+        });
+        function validateForm() {
+            return nameField.value.trim() !== '' &&
+                surnameField.value.trim() !== '' &&
+                passportNumberField.value.trim() !== '' &&
+                birthDateField.value.trim() !== '' &&
+                identificationNumberField.value.trim() !== '' &&
+                genderField.value.trim() !== '' &&
+                addressField.value.trim() !== '';
+        }
+        function checkAndToggleSubmitButton() {
+            var allFieldsFilled = nameField.value.trim() !== '' &&
+                surnameField.value.trim() !== '' &&
+                passportNumberField.value.trim() !== '' &&
+                birthDateField.value.trim() !== '' &&
+                identificationNumberField.value.trim() !== '' &&
+                genderField.value.trim() !== '' &&
+                addressField.value.trim() !== '';
+
+            var isConfirmed = confirmButton.classList.contains("confirmed");
+            var isDataSaved = confirmButton.classList.contains("data-saved");
+
+            submitButton.disabled = !(allFieldsFilled && isConfirmed && isDataSaved);
+
+            if (allFieldsFilled && isConfirmed && isDataSaved) {
+                submitButton.classList.remove('inactive-button');
+            } else {
+                submitButton.classList.add('inactive-button');
+            }
+        }
+        nameField.addEventListener('input', checkAndToggleSubmitButton);
+        surnameField.addEventListener('input', checkAndToggleSubmitButton);
+        passportNumberField.addEventListener('input', checkAndToggleSubmitButton);
+        birthDateField.addEventListener('input', checkAndToggleSubmitButton);
+        identificationNumberField.addEventListener('input', checkAndToggleSubmitButton);
+        genderField.addEventListener('input', checkAndToggleSubmitButton);
+        addressField.addEventListener('input', checkAndToggleSubmitButton);
+        checkAndToggleSubmitButton();
+    });
+</script>
+</body>
+</html>

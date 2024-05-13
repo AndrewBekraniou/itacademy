@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesUserPage.css}">
+</head>
+<body>
+<h1>Welcome!</h1>
+<h2>User Information</h2>
+<p>Username: <span th:text="${user.username}"></span></p>
+<p>Email: <span th:text="${user.email}"></span></p>
+<p>Phone: <span th:text="${user.phone}"></span></p>
+<h2>Orders</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Order #</th>
+        <th>Confirmation Date</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Total Price</th>
+        <th>Damage Details</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${#dates.format(order.confirmationDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#dates.format(order.orderStartDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(order.orderEndDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${order.orderStatus}"></td>
+        <td th:text="${order.totalPrice}"></td>
+        <td>
+            <span th:if="${order.damage != null}">
+                <p><b>Details:</b> <span th:text="${order.damage.infoDetailsDamage}"></span></p>
+                <p><b>Payment:</b> <span th:text="${order.damage.paymentForDamage}"></span></p>
+            </span>
+            <span th:unless="${order.damage != null}">No damage details</span>
+        </td>
+        <td>
+            <button id="payButton" th:class="${order.damage == null} ? 'inactive-button' : 'active-button'" onclick="payFine(this)">Pay for damage</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<button onclick="placeOrder()">Create new order</button>
+<div id="finePaidMessage" style="display: none; color: green; font-weight: bold;"><br>
+    Thank you, damages paid!
+</div>
+<script th:inline="javascript">
+    function payFine(button) {
+        if (!button.classList.contains('inactive-button')) {
+            document.getElementById("finePaidMessage").style.display = "block";
+        }
+    }
+    function placeOrder() {
+        window.location.href = "/mainPage";
+    }
+</script>
+</body>
+</html>

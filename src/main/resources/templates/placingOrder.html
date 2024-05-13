@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placing Order</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesPlacingOrder.css}">
+</head>
+<body>
+<header>
+    <h1>Placing Order</h1>
+</header>
+<div th:if="${order}">
+    <p th:text="'Order #: ' + ${order.id}"></p>
+    <p th:text="'Confirmation Date: ' + ${order.confirmationDate}"></p>
+    <p th:text="'Order Start Date: ' + ${order.orderStartDate}"></p>
+    <p th:text="'Order End Date: ' + ${order.orderEndDate}"></p>
+</div>
+
+<div th:if="${carData}" class="car-details">
+    <h2>Car Details</h2>
+    <p th:text="'Manufacturer and Model: ' + ${carData.manufacturer + ' ' + carData.model}"></p>
+    <p th:text="'Сolor: ' + ${carData.color}"></p>
+    <p th:text="'Year of Issue: ' + ${carData.yearOfIssue}"></p>
+    <p th:text="'BodyType: ' + ${carData.bodyType}"></p>
+    <p th:text="'FuelType: ' + ${carData.fuelType}"></p>
+    <p th:text="'Transmission: ' + ${carData.transmission}"></p>
+</div>
+
+<p class="total-price">Total Price: <span th:text="${order.totalPrice}"></span></p>
+
+<div th:if="${message}" class="success-message">
+    <p th:text="${message}"></p>
+</div>
+<br>
+<br>
+<form action="/orders/payOrder" method="post">
+    <input type="hidden" name="orderId" th:value="${order.id}">
+    <button type="submit" class="pay-button">Pay for the order</button>
+</form>
+</body>
+</html>

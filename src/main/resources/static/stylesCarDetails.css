@@ -1,0 +1,107 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.car-details,
+.order-form,
+.passport-data {
+    flex-basis: 30%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.car-details h2,
+.order-form h2,
+.passport-data h2 {
+    margin-top: 0;
+}
+
+.car-details p {
+    margin-top: 5px;
+}
+
+.order-form form label,
+.passport-data label {
+    display: block;
+    margin-top: 10px;
+}
+
+.order-form input[type="date"],
+.order-form input[type="number"],
+.order-form input[type="text"],
+.order-form input[type="submit"],
+.passport-data input[type="text"],
+.passport-data input[type="date"] {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order-form input[type="date"]:focus,
+.order-form input[type="number"]:focus,
+.order-form input[type="text"]:focus,
+.passport-data input[type="text"]:focus,
+.passport-data input[type="date"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.order-form button[type="submit"],
+.passport-data button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.order-form button[type="submit"]:hover,
+.passport-data button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+}
+
+.active-button {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+}
+
+.inactive-button {
+    background-color: #dc3545;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.order-form button[type="submit"].inactive-button {
+    background-color: #dc3545;
+}

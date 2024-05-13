@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesMainPage.css}">
+</head>
+<body>
+<header>
+    <h1>Car Rental</h1>
+    <button class="user-btn" onclick="checkAuthentication('user')">
+        User Page
+    </button>
+    <button class="admin-btn" onclick="checkAuthentication('admin')">
+        Admin Page
+    </button>
+
+</header>
+<script>
+    function checkAuthentication(userType) {
+        var url = userType === 'admin' ? '/adminMainPage' : '/userMainPage';
+        var successRedirect = userType === 'admin' ? '/adminPage' : '/userPage';
+        var errorMessage = userType === 'admin' ? 'Please log in as admin to access this page.' : 'Please log in to access this page.';
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    window.location.href = successRedirect;
+                } else {
+                    alert(errorMessage);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+<div class="container">
+    <section class="car-section">
+        <h2>Available Cars</h2>
+        <form action="/carMain" method="get">
+            <ul class="car-list">
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car1.id} + ')'"
+                        th:style="'border-color: ' + (${car1.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car1.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car1.regNumber}"></span><br>
+                    <span th:text="${manufacturer1}+ ' ' +${model1}"></span><br>
+                    <span th:unless="${car1 != null}">Car 1 is not available</span>
+                    <span class="unavailable-message" th:class="${car1.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car2.id} + ')'"
+                        th:style="'border-color: ' + (${car2.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car2.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car2.regNumber}"></span><br>
+                    <span th:text="${manufacturer2}+ ' ' +${model2}"></span><br>
+                    <span th:unless="${car2 != null}">Car 2 is not available</span>
+                    <span class="unavailable-message" th:class="${car2.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car3.id} + ')'"
+                        th:style="'border-color: ' + (${car3.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car3.available == 'unavailable'} ? 'disabled' : null">
+                        <span th:text="${car3.regNumber}"></span><br>
+                        <span th:text="${manufacturer3}+ ' ' +${model3}"></span><br>
+                    <span th:unless="${car3 != null}">Car 3 is not available</span>
+                    <span class="unavailable-message" th:class="${car3.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car4.id} + ')'"
+                        th:style="'border-color: ' + (${car4.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car4.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car4.regNumber}"></span><br>
+                    <span th:text="${manufacturer4}+ ' ' +${model4}"></span><br>
+                    <span th:unless="${car4 != null}">Car 4 is not available</span>
+                    <span class="unavailable-message" th:class="${car4.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car5.id} + ')'"
+                        th:style="'border-color: ' + (${car5.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car5.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car5.regNumber}"></span><br>
+                    <span th:text="${manufacturer5}+ ' ' +${model5}"></span><br>
+                    <span th:unless="${car5 != null}">Car 5 is not available</span>
+                    <span class="unavailable-message" th:class="${car5.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car6.id} + ')'"
+                        th:style="'border-color: ' + (${car6.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car6.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car6.regNumber}"></span><br>
+                    <span th:text="${manufacturer6}+ ' ' +${model6}"></span><br>
+                    <span th:unless="${car6 != null}">Car 6 is not available</span>
+                    <span class="unavailable-message" th:class="${car6.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car7.id} + ')'"
+                        th:style="'border-color: ' + (${car7.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car7.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car7.regNumber}"></span><br>
+                    <span th:text="${manufacturer7}+ ' ' +${model7}"></span><br>
+                    <span th:unless="${car7 != null}">Car 7 is not available</span>
+                    <span class="unavailable-message" th:class="${car7.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car8.id} + ')'"
+                        th:style="'border-color: ' + (${car8.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car8.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car8.regNumber}"></span><br>
+                    <span th:text="${manufacturer8}+ ' ' +${model8}"></span><br>
+                    <span th:unless="${car8 != null}">Car 8 is not available</span>
+                    <span class="unavailable-message" th:class="${car8.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car9.id} + ')'"
+                        th:style="'border-color: ' + (${car9.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car9.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car9.regNumber}"></span><br>
+                    <span th:text="${manufacturer9}+ ' ' +${model9}"></span><br>
+                    <span th:unless="${car9 != null}">Car 9 is not available</span>
+                    <span class="unavailable-message" th:class="${car9.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car10.id} + ')'"
+                        th:style="'border-color: ' + (${car10.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car10.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car10.regNumber}"></span><br>
+                    <span th:text="${manufacturer10}+ ' ' +${model10}"></span><br>
+                    <span th:unless="${car10 != null}">Car 10 is not available</span>
+                    <span class="unavailable-message" th:class="${car10.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car11.id} + ')'"
+                        th:style="'border-color: ' + (${car11.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car11.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car11.regNumber}"></span><br>
+                    <span th:text="${manufacturer11}+ ' ' +${model11}"></span><br>
+                    <span th:unless="${car11 != null}">Car 11 is not available</span>
+                    <span class="unavailable-message" th:class="${car11.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+                <button type="button" class="car-item" th:onclick="'redirectToCarDetails(' + ${car12.id} + ')'"
+                        th:style="'border-color: ' + (${car12.available} == 'available' ? 'green' : 'red')"
+                        th:attr="disabled=${car12.available == 'unavailable'} ? 'disabled' : null">
+                    <span th:text="${car12.regNumber}"></span><br>
+                    <span th:text="${manufacturer12}+ ' ' +${model12}"></span><br>
+                    <span th:unless="${car12 != null}">Car 12 is not available</span>
+                    <span class="unavailable-message" th:class="${car12.available == 'unavailable' ? 'visible' : 'hidden'}">Car is not available</span>
+                </button>
+            </ul>
+            <script th:inline="javascript">
+                function redirectToCarDetails(carId) {
+                    window.location.href = "/carDetails/" + carId;
+                }
+            </script>
+            <button type="button" onclick="showAllCars()">Show All Cars</button>
+            <div id="allCarsList"></div>
+
+            <script th:inline="javascript">
+                function showAllCars() {
+                    fetch('/showAllCars')
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            var carListHtml = '';
+                            data.forEach(function(car) {
+                                var status = car.available === 'available' ? 'Available' : 'Unavailable';
+                                var linkClass = car.available === 'available' ? '' : ' unavailable-link';
+                                carListHtml += '<p><a href="/carDetails?id=' + car.id + '" class="' + linkClass + '">' + car.manufacturer + ' ' + car.model + '</a> - ' + status + '</p>';
+                            });
+                            document.getElementById('allCarsList').innerHTML = carListHtml;
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+            </script>
+
+        </form>
+    </section>
+   <section>
+        <h2>Registration</h2>
+        <form action="/registration" method="post">
+            <label for="reg-username">Username:</label>
+            <input type="text" id="reg-username" name="username" required><br>
+            <label for="reg-password">Password:</label>
+            <input type="password" id="reg-password" name="password" required><br>
+            <label for="reg-email">Email:</label>
+            <input type="email" id="reg-email" name="email" required><br>
+            <label for="reg-phone">Phone:</label>
+            <input type="text" id="reg-phone" name="phone" required><br>
+            <input type="submit" value="Register" class="button">
+        </form>
+   </section>
+
+    <section>
+        <h2>Login</h2>
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Invalid username or password
+        </div>
+        <form id="login-form" action="/login" method="post">
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="username" required><br>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required><br>
+            <input type="submit" value="Login" class="button">
+        </form>
+    </section>
+</div>
+<footer>
+    <p>&copy; 2024 Car Rental</p>
+</footer>
+</body>
+</html>

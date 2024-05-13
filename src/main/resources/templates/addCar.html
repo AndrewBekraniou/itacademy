@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Car Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesAddCar.css}">
+</head>
+<body>
+<h2>Edit Car</h2>
+<form th:action="@{/add}" method="post">
+    <label for="regNumber">Registration Number:</label>
+    <input type="text" id="regNumber" th:field="*{car.regNumber}" required><br>
+    <input type="hidden" th:field="*{carData.id}"/>
+    <label for="manufacturer">Manufacturer:</label>
+    <input type="text" id="manufacturer" th:field="*{carData.manufacturer}" required><br>
+    <label for="color">Color:</label>
+    <input type="text" id="color" th:field="*{carData.color}" required><br>
+    <label for="model">Model:</label>
+    <input type="text" id="model" th:field="*{carData.model}" required><br>
+    <label for="yearOfIssue">Year of Issue:</label>
+    <input type="number" id="yearOfIssue" th:field="*{carData.yearOfIssue}" required><br>
+    <label for="rentPricePerDay">Rent Price Per Day:</label>
+    <input type="number" id="rentPricePerDay" th:field="*{carData.rentPricePerDay}" required><br>
+    <label for="bodyType">Body Type:</label>
+    <select id="bodyType" th:field="*{carData.bodyType}">
+        <option value="SEDAN">SEDAN</option>
+        <option value="SUV">SUV</option>
+        <option value="TRUCK">TRUCK</option>
+    </select><br>
+    <label for="fuelType">Fuel Type:</label>
+    <select id="fuelType" th:field="*{carData.fuelType}">
+        <option value="PETROL">PETROL</option>
+        <option value="DIESEL">DIESEL</option>
+        <option value="ELECTRIC">ELECTRIC</option>
+    </select><br>
+    <label for="transmission">Transmission:</label>
+    <select id="transmission" th:field="*{carData.transmission}">
+        <option value="MANUAL">MANUAL</option>
+        <option value="AUTOMATIC">AUTOMATIC</option>
+    </select><br>
+    <label for="available">Available:</label>
+    <select id="available" name="available" th:field="*{car.available}" required>
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+    </select><br>
+    <button type="submit">Add Car</button><br><br>
+
+    <label for="deleteRegNumber">Enter Registration Number to Delete:</label>
+    <input type="text" id="deleteRegNumber" name="deleteRegNumber"><br>
+
+    <button type="button" onclick="deleteCar()">Delete Car</button>
+</form>
+
+<script>
+    function deleteCar() {
+        var regNumber = document.getElementById("deleteRegNumber").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "/delete/" + regNumber, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Car and its data deleted successfully!");
+            }
+        };
+        xhr.send();
+    }
+</script>
+</body>
+</html>

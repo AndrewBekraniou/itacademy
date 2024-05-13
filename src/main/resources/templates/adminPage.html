@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesAdminPage.css}">
+</head>
+<body>
+<h1>Admin Page</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Surname</th>
+        <th>Name</th>
+        <th>User Phone</th>
+        <th>Car Reg Number</th>
+        <th>Car Manufacturer</th>
+        <th>Car Model</th>
+        <th>Order Status</th>
+        <th>Total Price</th>
+        <th>Damage</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}">Order ID</td>
+        <td th:if="${order.user.passportData}" th:text="${order.user.passportData.surname}"></td>
+        <td th:unless="${order.user.passportData}"></td>
+        <td th:if="${order.user.passportData}" th:text="${order.user.passportData.name}"></td>
+        <td th:unless="${order.user.passportData}"></td>
+        <td th:if="${order.user}" th:text="${order.user.phone}"></td>
+        <td th:unless="${order.user}" colspan="2"></td>
+        <td th:if="${order.car}" th:text="${order.car.regNumber}"></td>
+        <td th:unless="${order.car}"></td>
+        <td th:if="${order.car.carData}" th:text="${order.car.carData.manufacturer}"></td>
+        <td th:unless="${order.car.carData}"></td>
+        <td th:if="${order.car.carData}" th:text="${order.car.carData.model}"></td>
+        <td th:unless="${order.car.carData}"></td>
+        <td th:text="${order.orderStatus}">Order Status</td>
+        <td th:text="${order.totalPrice}">Total Price</td>
+        <td>
+            <form th:action="@{/admin/order/sendToUserPage}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.id}" />
+                <button type="submit" class="send-to-user">Send data to user</button>
+            </form>
+            <br>
+            <form th:action="@{/admin/order/{orderId}/damage(orderId=${order.id})}" method="get">
+                <input type="hidden" name="orderId" th:value="${order.id}" />
+                <button type="submit" class="damage">Damage</button>
+            </form>
+        </td>
+        <td>
+            <div class="action-container">
+                <form action="/orders/updateOrderStatus" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}" />
+                    <button type="submit" name="status" value="CONFIRMED">CONFIRMED</button>
+                </form>
+                <form action="/orders/updateOrderStatus" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}" />
+                    <button type="submit" name="status" value="REJECTED">REJECTED</button>
+                </form>
+                <form action="/orders/updateOrderStatus" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}" />
+                    <button type="submit" name="status" value="CLOSED">CLOSED</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<form th:action="@{/mainPage}" method="get">
+    <button type="submit">Return to Main Page</button>
+</form>
+<br>
+<form th:action="@{/addCar}" method="get">
+    <button type="submit">Edit Data</button>
+</form>
+</body>
+</html>

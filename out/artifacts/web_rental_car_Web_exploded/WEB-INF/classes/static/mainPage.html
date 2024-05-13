@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Car Rental" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .car-section {
+            flex-basis: calc(60% - 20px);
+            margin-bottom: 20px;
+        }
+
+        .car-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .car-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: calc(20% - 10px);
+            box-sizing: border-box;
+        }
+
+        .car-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        form {
+            flex-basis: calc(40% - 20px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Car Rental</h1>
+</header>
+<div class="container">
+    <section class="car-section">
+        <h2>Available Cars</h2>
+        <ul class="car-list">
+            <li class="car-item">
+                <strong>Car 1</strong><br>
+                <span>Model: Sedan</span><br>
+                <span>Price: $50/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 2</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $70/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 3</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $40/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 4</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $60/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 5</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $80/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 6</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $45/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 7</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $150/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 8</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $90/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 9</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $80/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 10</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $100/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 11</strong><br>
+                <span>Model: Sedan</span><br>
+                <span>Price: $50/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 12</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $70/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 13</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $40/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 14</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $60/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 15</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $80/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 16</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $45/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 17</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $150/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 18</strong><br>
+                <<span>Model: BMW</span><br>
+                <span>Price: $90/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 19</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $80/day</span>
+            </li>
+            <li class="car-item">
+                <strong>Car 20</strong><br>
+                <span>Model: BMW</span><br>
+                <span>Price: $100/day</span>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Registration</h2>
+        <form action="/register" method="post">
+            <label for="reg-username">Username:</label>
+            <input type="text" id="reg-username" name="username" required><br>
+            <label for="reg-password">Password:</label>
+            <input type="password" id="reg-password" name="password" required><br>
+            <label for="reg-email">Email:</label>
+            <input type="email" id="reg-email" name="email" required><br>
+            <label for="reg-phone">Phone:</label>
+            <input type="text" id="reg-phone" name="phone" required><br>
+            <input type="submit" value="Register" class="button">
+        </form>
+    </section>
+    <section>
+        <h2>Login</h2>
+        <form action="/login" method="post">
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="username" required><br>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required><br>
+            <input type="submit" value="Login" class="button">
+        </form>
+    </section>
+</div>
+<footer>
+    <p>&copy; 2024 Car Rental</p>
+</footer>
+</body>
+</html>

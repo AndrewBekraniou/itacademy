@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damage Handling Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesDamageForm.css}">
+</head>
+<body>
+<h1>Damage Handling Form</h1>
+<h2>Order № <span th:text="${order.id}"></span></h2>
+
+<form th:action="@{/admin/order/saveDamage}" method="post">
+    <input type="hidden" name="orderId" th:value="${order.id}"/>
+    <label for="infoDetailsDamage">Damage information:</label><br>
+    <textarea id="infoDetailsDamage" name="infoDetailsDamage" required></textarea><br>
+    <label for="paymentForDamage">Payment for damage:</label><br>
+    <input type="number" id="paymentForDamage" name="paymentForDamage" step="0.01" required><br><br>
+
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
